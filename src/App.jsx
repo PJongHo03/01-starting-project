@@ -5,17 +5,19 @@ import { useState } from "react";
 
 function App() {
   const [userInput, setUserInput] = useState({
-    InitialInvestment: 10000,
-    AnnualInvestment: 1200,
-    ExpectedReturn: 6,
-    Duration: 10,
+    initialInvestment: 10000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
+    duration: 10,
   });
+
+  const inputIsValid = userInput.duration >= 1;
 
   function handleChange(key, newValue) {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput,
-        [key]: newValue,
+        [key]: +newValue,
       };
     });
   }
@@ -24,7 +26,8 @@ function App() {
     <>
       <Header></Header>
       <UserInput onChange={handleChange} userInput={userInput}></UserInput>
-      <Result input={userInput}></Result>
+      {!inputIsValid && <p>정확한 값을 입력해 주세요</p>}
+      {inputIsValid && <Result input={userInput} />}
     </>
   );
 }
